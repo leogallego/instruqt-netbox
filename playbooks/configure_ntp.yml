@@ -15,7 +15,7 @@
         dest: /tmp/ntp_config_{{ inventory_hostname }}.yml
 
     - name: Apply NTP configuration to Cisco IOS devcies
-      when: ansible_network_os == 'cisco.ios.ios'
+#      when: ansible_network_os == 'cisco.ios.ios'
       cisco.ios.ios_ntp_global:
         config: "{{ lookup('file', '/tmp/ntp_config_{{ inventory_hostname }}.yml') | from_yaml }}"
         state: replaced
