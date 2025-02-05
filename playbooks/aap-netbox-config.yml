@@ -1,0 +1,57 @@
+- name: "Configure a basic NetBox with a Cisco device"
+  connection: local
+  hosts: localhost
+  gather_facts: false
+  vars:
+    netbox_url: "{{ lookup('env', 'NETBOX_API') }}"
+    netbox_token: "{{ lookup('env', 'NETBOX_TOKEN') }}"
+  tasks:
+    - name: Create site with all parameters
+      netbox.netbox.netbox_site:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: Cisco Live EMEA
+          time_zone: Europe/Amsterdam
+          description: Cisco Live 2025 Amsterdam
+          slug: cisco-live-emea
+        state: present
+
+    - name: Create manufacturer within NetBox with only required information
+      netbox.netbox.netbox_manufacturer:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: Cisco
+        state: present
+
+    - name: Create device type within NetBox with only required information
+      netbox.netbox.netbox_device_type:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          slug: catalyst8000v
+          model: C8000V
+          manufacturer: Cisco
+        state: present
+
+    - name: Create device role within NetBox with only required information
+      netbox.netbox.netbox_device_role:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: Edge Router
+          color: FFFFFF
+        state: present
+
+    - name: Create device within NetBox with only required information
+      netbox.netbox.netbox_device:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: catalyst1
+          device_type: catalyst8000v
+          device_role: Edge Router
+          site: cisco-live-emea
+        state: present
+    
