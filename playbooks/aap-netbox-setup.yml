@@ -115,7 +115,7 @@
         become_enabled: True
         playbook: aap-netbox-config.yml
         project: "netbox-setup-project"
-        credential: netbox-setup-api
+        credential: netbox-setup-creds
         validate_certs: false
         controller_username: admin
         controller_password: ansible123!        
