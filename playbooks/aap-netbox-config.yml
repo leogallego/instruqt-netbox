@@ -11,9 +11,7 @@
         netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token }}"
         data:
-          name: Cisco Live EMEA
-          time_zone: Europe/Amsterdam
-          description: Cisco Live 2025 Amsterdam
+          name: cisco-live-emea
           slug: cisco-live-emea
         state: present
 
@@ -22,7 +20,7 @@
         netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token }}"
         data:
-          name: Cisco
+          name: cisco
         state: present
 
     - name: Create device type within NetBox with only required information
@@ -30,9 +28,9 @@
         netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token }}"
         data:
-          slug: catalyst8000v
+          slug: cisco-c8000v
           model: C8000V
-          manufacturer: Cisco
+          manufacturer: cisco
         state: present
 
     - name: Create device role within NetBox with only required information
@@ -43,15 +41,44 @@
           name: Edge Router
           color: FFFFFF
         state: present
+    
+    - name: Create a custom field on device and virtual machine
+      netbox.netbox.netbox_custom_field:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          content_types:
+            - dcim.device
+          name: host
+          type: text
+    
+    - name: Create a custom field on device and virtual machine
+      netbox.netbox.netbox_custom_field:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          content_types:
+            - dcim.device
+          name: port
+          type: text
+
+    - name: Create platform within NetBox with only required information
+      netbox.netbox.netbox_platform:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: cisco.ios.ios
+          slug: cisco-ios-ios
+          manufacturer: cisco
+        state: present
 
     - name: Create device within NetBox with only required information
       netbox.netbox.netbox_device:
         netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token }}"
         data:
-          name: catalyst1
-          device_type: catalyst8000v
+          name: cat1
+          device_type: cisco-c8000v
           device_role: Edge Router
           site: cisco-live-emea
         state: present
-    
