@@ -93,7 +93,7 @@
         organization: Default
         state: present
         scm_type: git
-        scm_url: https://github.com/leogallego/instruqt-netbox.git
+        scm_url: https://github.com/leogallego/ansible-netbox-setup.git
         validate_certs: false
         controller_username: admin
         controller_password: ansible123!
@@ -114,9 +114,10 @@
         state: "present"
         inventory: "netbox-setup-inventory"
         become_enabled: True
-        playbook: "playbooks/aap-netbox-config.yml"
+        playbook: "netbox_setup.yml"
         project: "netbox-setup-project"
-        credential: netbox-setup-creds
+        credential: "netbox-setup-creds"
+        execution_environment: "netbox-ee"
         validate_certs: false
         controller_username: admin
         controller_password: ansible123!        
