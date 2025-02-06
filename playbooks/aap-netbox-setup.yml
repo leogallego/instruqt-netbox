@@ -1,4 +1,5 @@
 ---
+### DEPRECATED. Check aap-netbox-setup/app-netbox-setup.yml
 - name: Instruqt AAP Setup
   hosts: localhost
   become: false
